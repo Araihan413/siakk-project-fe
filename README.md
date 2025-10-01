@@ -1,36 +1,119 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+---
 
-First, run the development server:
+```markdown
+# SIAKK - Sistem Asuhan Keperawatan Keluarga
+
+Proyek ini merupakan aplikasi web berbasis **Next.js (App Router)** yang digunakan untuk dokumentasi dan manajemen **asuhan keperawatan keluarga**.  
+Sistem ini ditujukan sebagai alat bantu mahasiswa keperawatan dalam melakukan praktik, pengkajian, diagnosa, dan dokumentasi asuhan keperawatan.
+
+---
+
+## Teknologi yang Digunakan
+
+- [Next.js 14+](https://nextjs.org/) - React Framework dengan App Router
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [Lucide React](https://lucide.dev/) - Icon library
+- [TypeScript](https://www.typescriptlang.org/) - Superset dari JavaScript
+- [Shadcn/UI](https://ui.shadcn.com/) - UI component library
+
+---
+
+## Struktur Folder
+
+Struktur utama proyek:
+
+```
+
+app/
+│
+├─ layout.tsx              # Layout global untuk seluruh aplikasi
+├─ page.tsx                # Halaman utama (landing page)
+│
+├─ auth/                  # Folder autentikasi
+│   ├─ login/page.tsx     # Halaman login
+│   └─ register/page.tsx  # Halaman registrasi
+│
+├─ dashboard/            # Halaman utama setelah login
+│   ├─ layout.tsx        # Layout khusus dashboard (sidebar & navbar)
+│   ├─ page.tsx          # Halaman dashboard utama (MainContent)
+│   │
+│   ├─ diagnosa/         # Modul diagnosa
+│   │   └─ page.tsx
+│   │
+│   ├─ pengkajian/       # Modul pengkajian
+│   │   └─ page.tsx
+│   │
+│   └─ evaluasi/         # Modul evaluasi (opsional)
+│       └─ page.tsx
+│
+├─ components/
+│   ├─ dashboard/        # Komponen untuk dashboard
+│   │   ├─ Navbar.tsx
+│   │   ├─ Sidebar.tsx
+│   │   ├─ DashboardHeader.tsx
+│   │   ├─ StatCards.tsx
+│   │   └─ MainContent.tsx
+│   │
+│   └─ ui/              # Reusable UI components
+│       └─ card.tsx
+│
+└─ lib/                 # Helper / utilitas
+└─ utils.ts
+
+````
+
+---
+
+## Alur Routing
+
+- `/` → Halaman utama / landing page  
+- `/auth/login` → Halaman login  
+- `/dashboard` → Halaman dashboard utama  
+- `/dashboard/diagnosa` → Halaman diagnosa  
+- `/dashboard/pengkajian` → Halaman pengkajian  
+- `/dashboard/evaluasi` → Halaman evaluasi  
+
+Navigasi antar menu di dashboard hanya mengganti konten bagian tengah, **sidebar dan navbar tetap tampil**.
+
+---
+
+## Cara Menjalankan Proyek
+
+1. Clone repository:
+```bash
+git clone https://github.com/username/siakk.git
+cd siakk-fe
+````
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Jalankan server development:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Buka di browser:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Catatan
 
-To learn more about Next.js, take a look at the following resources:
+* Semua halaman setelah login berada di dalam folder `dashboard/`
+* `layout.tsx` hanya ada dua:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  * `app/layout.tsx` → layout global
+  * `app/dashboard/layout.tsx` → layout dashboard
+* Setiap modul baru cukup menambahkan folder + `page.tsx` di dalam `dashboard/`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
