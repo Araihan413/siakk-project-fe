@@ -45,14 +45,18 @@ export default function Sidebar({
   }, [pathname]);
 
   return (
-    <div className={`bg-white shadow-md ${isCollapsed ? "w-20" : "w-64"} h-screen`}>
+     <div
+      className={`bg-white shadow-md h-screen flex flex-col transition-all duration-300 ${
+        isCollapsed ? "w-20" : "w-64"
+      }`}
+    >
         <div className="bg-white shadow-md transition-all duration-300 flex flex-col h-full">
         {/* Header */}
         <div className="flex items-center p-3 border-b relative">
             {!isCollapsed && <h1 className="text-xl font-bold ml-3">🩺 SIAKK</h1>}
             <button
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className={`p-2 rounded hover:bg-gray-100 transition-all ${
+            className={`p-2 rounded hover:bg-gray-100 transition-all cursor-pointer ${
                 isCollapsed ? "ml-2" : "ml-auto"
             }`}
             >
@@ -70,12 +74,12 @@ export default function Sidebar({
                 <button
                 key={i}
                 onClick={() => router.push(item.path)}
-                className={`flex items-center gap-3 w-full p-3 rounded-lg transition-all ${
+                className={`flex items-center gap-3 w-full p-3 rounded-lg transition-all duration-300 ${
                     isCollapsed ? "justify-center" : ""
                 } ${
                     isActive
-                    ? "bg-green-100 text-green-600 font-semibold"
-                    : "hover:bg-gray-100 text-gray-700"
+                    ? "bg-green-100 text-green-600 font-semibold cursor-pointer"
+                    : "hover:bg-gray-100 text-gray-700 cursor-pointer"
                 }`}
                 >
                 {item.icon}
@@ -91,7 +95,7 @@ export default function Sidebar({
         <div className="p-2 space-y-2 border-t">
             <button
             onClick={() => router.push("/auth/login")}
-            className={`flex items-center gap-3 w-full p-3 rounded-lg transition-all ${
+            className={`flex items-center gap-3 w-full p-3 rounded-lg transition-all cursor-pointer duration-300 ${
                 isCollapsed ? "justify-center" : ""
             } hover:bg-red-100 text-red-600`}
             >
