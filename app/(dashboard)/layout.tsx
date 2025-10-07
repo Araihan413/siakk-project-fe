@@ -8,7 +8,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false); 
   return (
-    <div className="flex h-screen bg-gray-100 "> 
+    <div className="flex h-screen bg-gray-100 md:overflow-hidden">
       {/* === Sidebar (desktop) === */}
       <div className="hidden md:block h-screen">
         <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
