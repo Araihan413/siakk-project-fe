@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import LogoutButton from "../../../lib/auth/LogoutApi";
 import {
   LayoutDashboard,
   ClipboardList,
@@ -92,19 +93,7 @@ export default function Sidebar({
         </nav>
 
         {/* Logout */}
-        <div className="p-2 space-y-2 border-t">
-            <button
-            onClick={() => router.push("/auth/login")}
-            className={`flex items-center gap-3 w-full p-3 rounded-lg transition-all cursor-pointer duration-300 ${
-                isCollapsed ? "justify-center" : ""
-            } hover:bg-red-100 text-red-600`}
-            >
-            <div className={`${!isCollapsed ? "pl-3.5" : ""} flex items-center gap-3`}>
-                <LogOut className="w-5 h-5" />
-                {!isCollapsed && <span className="text-sm font-medium">Keluar</span>}
-            </div>
-            </button>
-        </div>
+          <LogoutButton isCollapsed={isCollapsed} />
         </div>
     </div>
     );
