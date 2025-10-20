@@ -1,81 +1,138 @@
-"use client";
+'use client';
 
-import { useState, FormEvent } from "react";
+import Image from 'next/image';
+import { useState } from 'react';
+import NurseIllustration from '@/public/AuthImg/img1.png';
+import RegisterStep from '../../components/auth/register/RegisterStep';
 
-interface RegisterFormProps {
-  toggle: () => void;
-}
+export default function RegisterForm({ toggle }: { toggle: () => void }) {
+  const [step, setStep] = useState(1);
+ 
+const [form, setForm] = useState({
+  name: '',
+  email: '',
+  role: '',
+  npm: '',
+  program_studi: '',
+  semester: '',
+  usia: '',
+  jenis_kelamin: '',
+  alamat: '',
+  no_hp: '',
+  password: '',
+  confirmPassword: '',
+  nidn: '', 
+  departemen: '', 
+});
 
-export default function RegisterForm({ toggle }: RegisterFormProps) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    console.log({ name, email, password });
-    // TODO: Tambahkan fungsi register ke backend di sini
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const handleNext = () => setStep(step + 1);
+  const handleBack = () => setStep(step - 1);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Form submitted:', form);
+  };
+
+
+const [animate, setAnimate] = useState(""); 
+
+const handleNextWithAnim = () => {
+  setAnimate("animate-flipLeft");
+  setTimeout(() => {
+    setAnimate("");
+    handleNext(); 
+  }, 300); 
+};
+
+const handleBackWithAnim = () => {
+  setAnimate("animate-flipRight");
+  setTimeout(() => {
+    setAnimate("");
+    handleBack(); 
+  }, 300);
+};
+
   return (
-    <section className="flex max-w-3xl w-full p-5 bg-[#379748] rounded-2xl items-center">
-      {/* === Left Form Section === */}
-      <div className="px-8 md:w-1/2">
-        <h2 className="font-bold text-3xl text-[#f3fff5]">Register</h2>
-        <p className="mt-4 text-sm text-[#f3fff5]">
-          Create your account to get started.
-        </p>
+    <div className="relative flex flex-col lg:flex-row w-full min-h-screen overflow-hidden bg-white">
+      {/* Background */}
+      <div className="absolute bottom-0 left-0 right-0 top-[8%] z-0">
+        <svg className="w-full h-full" viewBox="0 0 85 100" preserveAspectRatio="none">
+          <path d="M 0 100 L 0 25 C 65 170, 75 0, 100 90 Q 100 100, 100 100 Z" fill="#015711" />
+        </svg>
+      </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-8">
-          <input
-            type="text"
-            placeholder="Full Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="p-2 rounded-xl border border-white focus:border-white focus:outline-none"
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="p-2 rounded-xl border border-white focus:border-white focus:outline-none"
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="p-2 rounded-xl border border-white focus:border-white focus:outline-none"
-          />
-
-          <button
-            type="submit"
-            className="py-2 bg-[#05541e] text-gray-200 rounded-xl hover:scale-105 hover:bg-[#0a8330] duration-300"
-          >
-            Register
-          </button>
-        </form>
-
-        <div className="flex mt-4 text-sm justify-between items-center">
-          <p>Already have an account?</p>
-          <button
-            onClick={toggle}
-            className="py-2 px-5 bg-[#05541e] text-white font-semibold rounded-xl hover:scale-110 hover:bg-[#002c7424] duration-300"
-          >
-            Login
-          </button>
+      <div className="hidden lg:flex flex-1 flex-col justify-between items-center relative z-10 p-8">
+        <header className="text-center lg:text-left w-full mt-4">
+          <h1 className="text-3xl font-extrabold text-[#1f2937]">Buat Akun Baru</h1>
+          <p className="mt-2 text-[14.5px] text-[#99A1B7] font-semibold">
+            Gabung bersama kami untuk memulai perjalanan Anda
+          </p>
+        </header>
+        <div className="relative w-[85vw] max-w-[650px] aspect-[600/534] z-30 lg:translate-x-[-4.5%] top-8">
+          <Image src={NurseIllustration} alt="Ilustrasi Perawat dan Dokter" fill className="object-contain" priority />
         </div>
       </div>
-
-      {/* === Right Image Section === */}
-      <div className="hidden md:block w-1/2">
-        <img
-          src="/loginimg.png"
-          alt="Dashboard preview"
-          className="object-cover max-h-[3800px] rounded-2xl"
-        />
+      {/* Kanan Form */}
+      <div className="flex-1 lg:-mt-38 sm:mt-0 flex items-center justify-center p-6 lg:p-12 relative z-10 lg:translate-x-[-10%] sm:translate-x-0">
+        <div className="w-full lg:max-w-[70%] bg-[#F7FAFC] p-12 rounded-2xl shadow-xl border border-gray-100">
+          <form
+            onSubmit={handleSubmit}
+            className={`form-container space-y-6 transition-transform duration-500 ${animate}`}
+          >
+            <RegisterStep
+              step={step}
+              role={form.role}
+              form={form}
+              handleChange={handleChange}
+            />
+            <div className="flex justify-between mt-6 items-center">
+            {/* Tombol Back */}
+            <div>
+              {step > 1 && (
+                <button
+                  type="button"
+                  onClick={handleBackWithAnim}
+                  className={`text-[#369748] hover:text-[#00642b] ${animate && "transform-gpu"}`}
+                >
+                  Back
+                </button>
+              )}
+            </div>
+            {/* Next (teks) & Submit */}
+            <div className="flex items-center gap-4">
+              {(form.role === 'mahasiswa' || form.role === 'dosen') && step < 2 && (
+                <span
+                  onClick={handleNextWithAnim}
+                  className={`cursor-pointer text-[#369748] hover:text-[#00642b] font-medium ${animate}`}
+                >
+                  Next
+                </span>
+              )}
+              {(form.role === 'admin' || step === 2 || (form.role === 'mahasiswa' && step === 2) || (form.role === 'dosen' && step === 2)) && (
+                <button
+                  type="submit"
+                  className="py-3 px-6 rounded-lg shadow-md text-white bg-[#369748] hover:bg-[#00642b] transition-colors"
+                >
+                  Daftar
+                </button>
+              )}
+            </div>
+          </div>
+          </form>
+          <div className="mt-6 text-center">
+            <p className="text-sm text-gray-600">
+              Sudah punya akun?{' '}
+              <button type="button" onClick={toggle} className="font-semibold text-[#369748] hover:text-[#00642b]">
+                Masuk di sini
+              </button>
+            </p>
+          </div>
+        </div>
       </div>
-    </section>
+    </div>
   );
 }
