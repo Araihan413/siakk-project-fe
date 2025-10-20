@@ -120,3 +120,41 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+/* konteks 3D untuk animasi flip */
+.form-container {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+/* Animasi Flip */
+@keyframes flipLeft {
+  0% {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: rotateY(-180deg);
+    opacity: 0.8;
+  }
+}
+
+@keyframes flipRight {
+  0% {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: rotateY(180deg);
+    opacity: 0.8;
+  }
+}
+
+.animate-flipLeft {
+  animation: flipLeft 0.5s ease-in-out forwards;
+}
+
+.animate-flipRight {
+  animation: flipRight 0.7s ease-in-out forwards;
+}
