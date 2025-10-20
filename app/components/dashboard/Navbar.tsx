@@ -1,16 +1,21 @@
 "use client";
 
 import { Bell, Menu } from "lucide-react";
+import { useEffect, useState } from "react";
 
-export default function Navbar({
-  userName,
-  onMenuClick,
-}: {
-  userName: string;
-  onMenuClick?: () => void;
-}) {
+export default function Navbar({ onMenuClick }: { onMenuClick?: () => void }) {
+  const [userName, setUserName] = useState("User");
+  const [role, setRole] = useState("");
+
+  useEffect(() => {
+    const name = localStorage.getItem("name");
+    const storedRole = localStorage.getItem("role");
+    if (name) setUserName(name);
+    if (storedRole) setRole(storedRole);
+  }, []);
+
   return (
-    <div className="flex items-center justify-between bg-white shadow px-4 md:px-6 py-4">
+    <div className="flex items-center justify-between bg-white shadow px-4 md:px-6 py-3.5">
       <div className="flex items-center gap-3">
         <button
           onClick={onMenuClick}
@@ -32,11 +37,18 @@ export default function Navbar({
 
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
-            {userName.charAt(0)}
+            {userName.charAt(0).toUpperCase()}
           </div>
-          <span className="text-gray-700 font-medium hidden sm:inline">
-            {userName}
-          </span>
+          <div className="flex flex-col">
+            <span className="text-gray-700 font-medium hidden sm:inline">
+              {userName}
+            </span>
+            {role && (
+              <span className="text-gray-500 text-[8px] hidden sm:inline text-center">
+                {role.toUpperCase()}
+              </span>
+            )}
+          </div>
         </div>
       </div>
     </div>
