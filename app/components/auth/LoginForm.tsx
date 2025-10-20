@@ -151,7 +151,7 @@ export default function LoginForm({ toggle }: LoginFormProps) {
               <button
                 type="button"
                 onClick={toggle}
-                className="font-semibold text-[#369748] hover:text-[#00642b]"
+                className="font-semibold text-[#369748] hover:text-[#00642b] cursor-pointer"
               >
                 Daftar di sini
               </button>

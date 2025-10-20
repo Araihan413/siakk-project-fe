@@ -126,7 +126,7 @@ const handleBackWithAnim = () => {
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
               Sudah punya akun?{' '}
-              <button type="button" onClick={toggle} className="font-semibold text-[#369748] hover:text-[#00642b]">
+              <button type="button" onClick={toggle} className="font-semibold text-[#369748] hover:text-[#00642b] cursor-pointer">
                 Masuk di sini
               </button>
             </p>
