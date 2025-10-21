@@ -34,6 +34,11 @@ export default function RegisterForm({ toggle }: { toggle: () => void }) {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+    // Special handler untuk Select component
+  const handleSelectChange = (fieldName: string) => (value: string) => {
+    setForm(prev => ({ ...prev, [fieldName]: value }));
+  };
+
   const handleNext = () => setStep(step + 1);
   const handleBack = () => setStep(step - 1);
 
@@ -76,7 +81,7 @@ const handleCloseAlert = () => {
 };
 
   return (
-    <div className="relative flex flex-col lg:flex-row w-full min-h-screen overflow-hidden bg-white">
+    <div className="relative grid grid-cols-1 lg:grid-cols-2 w-full min-h-screen overflow-hidden bg-white ">
       {alert && <Alert type={alert.type} message={alert.message}  onClose={handleCloseAlert} />}
       {/* Background */}
       <div className="absolute bottom-0 left-0 right-0 top-[8%] z-0">
@@ -85,20 +90,20 @@ const handleCloseAlert = () => {
         </svg>
       </div>
 
-      <div className="hidden lg:flex flex-1 flex-col justify-between items-center relative z-10 p-8">
+      <div className="col-span-1 lg:flex flex-1 flex-col justify-between items-center relative z-10 p-8 ">
         <header className="text-center lg:text-left w-full mt-4">
           <h1 className="text-3xl font-extrabold text-[#1f2937]">Buat Akun Baru</h1>
           <p className="mt-2 text-[14.5px] text-[#99A1B7] font-semibold">
             Gabung bersama kami untuk memulai perjalanan Anda
           </p>
         </header>
-        <div className="relative w-[85vw] max-w-[650px] aspect-[600/534] z-30 lg:translate-x-[-4.5%] top-8">
+        <div className="hidden lg:block relative w-[85vw] max-w-[650px] aspect-[600/534] z-30  top-8 pt-10">
           <Image src={NurseIllustration} alt="Ilustrasi Perawat dan Dokter" fill className="object-contain" priority />
         </div>
       </div>
       {/* Kanan Form */}
-      <div className="flex-1 lg:-mt-38 sm:mt-0 flex items-center justify-center p-6 lg:p-12 relative z-10 lg:translate-x-[-10%] sm:translate-x-0">
-        <div className="w-full lg:max-w-[70%] bg-[#F7FAFC] p-12 rounded-2xl shadow-xl border border-gray-100">
+      <div className="col-span-1  flex-1 sm:mt-0  flex items-start justify-center p-6 lg:p-0 relative z-10 ">
+        <div className="w-full lg:max-w-[80%] bg-[#F7FAFC] p-8 rounded-2xl shadow-xl border border-gray-100 lg:my-20">
           <form
             onSubmit={handleSubmit}
             className={`form-container space-y-6 transition-transform duration-500 ${animate}`}
@@ -108,6 +113,8 @@ const handleCloseAlert = () => {
               role={form.role}
               form={form}
               handleChange={handleChange}
+              handleSelectChange={handleSelectChange}
+
             />
             <div className="flex justify-between mt-6 items-center">
             {/* Tombol Back */}
