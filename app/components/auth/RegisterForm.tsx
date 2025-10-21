@@ -4,26 +4,31 @@ import Image from 'next/image';
 import { useState } from 'react';
 import NurseIllustration from '@/public/AuthImg/img1.png';
 import RegisterStep from '../../components/auth/register/RegisterStep';
+import { registerUser } from '@/lib/auth/RegisterApi';
+import Alert from '../Alert';
+import { useRouter } from 'next/navigation';
 
 export default function RegisterForm({ toggle }: { toggle: () => void }) {
   const [step, setStep] = useState(1);
- 
-const [form, setForm] = useState({
-  name: '',
-  email: '',
-  role: '',
-  npm: '',
-  program_studi: '',
-  semester: '',
-  usia: '',
-  jenis_kelamin: '',
-  alamat: '',
-  no_hp: '',
-  password: '',
-  confirmPassword: '',
-  nidn: '', 
-  departemen: '', 
-});
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    role: '',
+    npm: '',
+    program_studi: '',
+    semester: '',
+    usia: '',
+    jenis_kelamin: '',
+    alamat: '',
+    no_hp: '',
+    password: '',
+    confirmPassword: '',
+    nidn: '', 
+    departemen: '', 
+  });
+  const [alert, setAlert] = useState<{ type: 'success' | 'error' | 'info'; message: string } | null>(null);
+
+  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -32,9 +37,19 @@ const [form, setForm] = useState({
   const handleNext = () => setStep(step + 1);
   const handleBack = () => setStep(step - 1);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Form submitted:', form);
+    const res = await registerUser(form);
+
+    if (res.error) {
+      setAlert({ type: 'error', message: res.message });
+    } else {
+      setAlert({type: 'success', message: res.message});
+      setTimeout(() => {
+        router.push('/auth/login');
+      }, 1200);
+    }
   };
 
 
@@ -56,8 +71,13 @@ const handleBackWithAnim = () => {
   }, 300);
 };
 
+const handleCloseAlert = () => {
+  setAlert(null); 
+};
+
   return (
     <div className="relative flex flex-col lg:flex-row w-full min-h-screen overflow-hidden bg-white">
+      {alert && <Alert type={alert.type} message={alert.message}  onClose={handleCloseAlert} />}
       {/* Background */}
       <div className="absolute bottom-0 left-0 right-0 top-[8%] z-0">
         <svg className="w-full h-full" viewBox="0 0 85 100" preserveAspectRatio="none">
