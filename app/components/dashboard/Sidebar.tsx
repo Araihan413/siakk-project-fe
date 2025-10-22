@@ -20,22 +20,26 @@ import {
 export default function Sidebar({
   isCollapsed,
   setIsCollapsed,
+  isMobileOpen,
+  setIsMobileOpen
 }: {
   isCollapsed: boolean;
   setIsCollapsed: (v: boolean) => void;
+  isMobileOpen: boolean;
+  setIsMobileOpen: (v: boolean) => void;
 }) {
   const router = useRouter();
   const pathname = usePathname();
 
   const menuItems = [
-    { icon: <LayoutDashboard className="w-5 h-5" />, label: "Dashboard", path: "/" },
-    { icon: <ClipboardList className="w-5 h-5" />, label: "Pengkajian", path: "/pengkajian" },
-    { icon: <Stethoscope className="w-5 h-5" />, label: "Diagnosa", path: "/diagnosa" },
-    { icon: <FileText className="w-5 h-5" />, label: "Rencana Tindakan", path: "/rencana" },
-    { icon: <Target className="w-5 h-5" />, label: "Tujuan", path: "/tujuan" },
-    { icon: <Wrench className="w-5 h-5" />, label: "Implementasi", path: "/implementasi" },
-    { icon: <CheckCircle className="w-5 h-5" />, label: "Evaluasi", path: "/evaluasi" },
-    { icon: <Download className="w-5 h-5" />, label: "Laporan", path: "/laporan" },
+    { icon: <LayoutDashboard className="w-5 h-5 flex-shrink-0" />, label: "Dashboard", path: "/" },
+    { icon: <ClipboardList className="w-5 h-5 flex-shrink-0" />, label: "Pengkajian", path: "/pengkajian" },
+    { icon: <Stethoscope className="w-5 h-5 flex-shrink-0" />, label: "Diagnosa", path: "/diagnosa" },
+    { icon: <FileText className="w-5 h-5 flex-shrink-0" />, label: "Rencana Tindakan", path: "/rencana" },
+    { icon: <Target className="w-5 h-5 flex-shrink-0" />, label: "Tujuan", path: "/tujuan" },
+    { icon: <Wrench className="w-5 h-5 flex-shrink-0" />, label: "Implementasi", path: "/implementasi" },
+    { icon: <CheckCircle className="w-5 h-5 flex-shrink-0" />, label: "Evaluasi", path: "/evaluasi" },
+    { icon: <Download className="w-5 h-5 flex-shrink-0" />, label: "Laporan", path: "/laporan" },
   ];
 
   const [activePath, setActivePath] = useState("");
@@ -56,7 +60,10 @@ export default function Sidebar({
         <div className="flex items-center p-3 border-b relative">
             {!isCollapsed && <h1 className="text-xl font-bold ml-3">🩺 SIAKK</h1>}
             <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
+            onClick={() => {
+              setIsCollapsed(!isCollapsed)
+              isMobileOpen ? setIsMobileOpen(false) : null
+            }}
             className={`p-2 rounded hover:bg-gray-100 transition-all cursor-pointer ${
                 isCollapsed ? "ml-2" : "ml-auto"
             }`}
@@ -74,7 +81,10 @@ export default function Sidebar({
             return (
                 <button
                 key={i}
-                onClick={() => router.push(item.path)}
+                onClick={() => {
+                  router.push(item.path)
+                  isMobileOpen ? setIsMobileOpen(false) : null
+                }}
                 className={`flex items-center gap-3 w-full p-3 rounded-lg transition-all duration-300 ${
                     isCollapsed ? "justify-center" : ""
                 } ${

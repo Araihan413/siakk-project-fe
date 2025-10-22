@@ -16,7 +16,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <div className="flex h-screen bg-gray-100 md:overflow-hidden">
       {/* === Sidebar (desktop) === */}
       <div className="hidden md:block h-screen">
-        <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+        <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} isMobileOpen={false} setIsMobileOpen={setIsMobileOpen} />
       </div>
 
       {/* === Sidebar (mobile overlay) === */}
@@ -29,7 +29,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             className="absolute left-0 top-0 h-full w-64 bg-white shadow-md"
             onClick={(e) => e.stopPropagation()}
           >
-            <Sidebar isCollapsed={false} setIsCollapsed={setIsCollapsed} />
+            <Sidebar isCollapsed={false} setIsCollapsed={setIsCollapsed} isMobileOpen={isMobileOpen} setIsMobileOpen={setIsMobileOpen} />
           </div>
         </div>
       )}

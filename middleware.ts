@@ -7,6 +7,18 @@ export function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
 
   const isAuthPage = path.startsWith("/auth/login");
+  const isRegisterPage = path.startsWith("/auth/register");
+
+
+
+  if (accessToken && isRegisterPage) {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+
+    if (isRegisterPage) {
+    return NextResponse.next();
+  }
+
   if (accessToken && isAuthPage) {
     return NextResponse.redirect(new URL("/", req.url));
   }
